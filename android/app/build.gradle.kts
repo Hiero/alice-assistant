@@ -32,11 +32,11 @@ if (!sherpaAar.exists()) {
 }
 
 android {
-    namespace = "com.katsukasa.alice"
+    namespace = "io.github.hiero.alice"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.katsukasa.alice"
+        applicationId = "io.github.hiero.alice"
         minSdk = 33
         targetSdk = 35
         versionCode = 1

@@ -1,4 +1,4 @@
-package com.katsukasa.alice
+package io.github.hiero.alice
 
 import android.content.Intent
 import android.os.Bundle
@@ -92,7 +92,7 @@ class MainActivity : ComponentActivity() {
         vm.setForeground(false)
     }
 
-    /** Set up over adb: am start -n com.katsukasa.alice/.MainActivity --es host ... --ei port ... --es token ... */
+    /** Set up over adb: am start -n io.github.hiero.alice/.MainActivity --es host ... --ei port ... --es token ... */
     private fun applySetup(intent: Intent?) {
         val extras = intent?.extras ?: return
         if (extras.containsKey("token") || extras.containsKey("host")) {

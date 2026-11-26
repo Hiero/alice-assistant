@@ -19,7 +19,7 @@ Her faces and the launcher icon are copied from `shell/assets` at build time. Wi
 The backend listens on the PC's Tailscale address, port 7720, and creates a token in `~/.config/alice/phone-token`. Hand the token to the app over adb, so it never has to be typed:
 
 ```sh
-adb shell am start -n com.katsukasa.alice/.MainActivity --es token "$(cat ~/.config/alice/phone-token)"
+adb shell am start -n io.github.hiero.alice/.MainActivity --es token "$(cat ~/.config/alice/phone-token)"
 ```
 
 Add `--es host <address>` with the PC's Tailscale address (`tailscale ip -4` on the PC), or type it in the app's settings. To build it into your own copies of the app instead, put `aliceDefaultHost=<address>` in `~/.gradle/gradle.properties`. If Tailscale on the phone only lets some apps through, add Alice to that list.
@@ -32,7 +32,7 @@ The model is too big for the APK, so it's copied into the app's own storage once
 curl -L -o gemma-4-E4B-it.litertlm \
   https://huggingface.co/litert-community/gemma-4-E4B-it-litert-lm/resolve/main/gemma-4-E4B-it.litertlm
 adb push gemma-4-E4B-it.litertlm /data/local/tmp/alice-phone.litertlm
-adb shell run-as com.katsukasa.alice cp /data/local/tmp/alice-phone.litertlm files/
+adb shell run-as io.github.hiero.alice cp /data/local/tmp/alice-phone.litertlm files/
 adb shell rm /data/local/tmp/alice-phone.litertlm
 ```
 
@@ -69,7 +69,7 @@ D=/data/local/tmp/kokoro; K=kokoro-multi-lang-v1_0
 adb shell mkdir -p $D
 adb push $K/model.onnx $K/tokens.txt $K/lexicon-us-en.txt $K/espeak-ng-data $D/
 adb push $K/voices-alice.bin $D/voices.bin
-adb shell run-as com.katsukasa.alice cp -r $D files/ && adb shell rm -rf $D
+adb shell run-as io.github.hiero.alice cp -r $D files/ && adb shell rm -rf $D
 ```
 
 Her phone prompt is `app/src/main/assets/offline-prompt.txt`. Test changes on the PC before installing them, with a model of the same size in Ollama:

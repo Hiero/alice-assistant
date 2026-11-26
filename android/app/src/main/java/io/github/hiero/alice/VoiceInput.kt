@@ -1,4 +1,4 @@
-package com.katsukasa.alice
+package io.github.hiero.alice
 
 import android.annotation.SuppressLint
 import android.content.Context

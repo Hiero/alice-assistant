@@ -1,7 +1,7 @@
-package com.katsukasa.alice
+package io.github.hiero.alice
 
-import com.katsukasa.alice.PhoneAlice.Action
-import com.katsukasa.alice.PhoneAlice.App
+import io.github.hiero.alice.PhoneAlice.Action
+import io.github.hiero.alice.PhoneAlice.App
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNull
 import org.junit.Test

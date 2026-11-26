@@ -1,4 +1,4 @@
-package com.katsukasa.alice
+package io.github.hiero.alice
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext

@@ -1,4 +1,4 @@
-package com.katsukasa.alice
+package io.github.hiero.alice
 
 import android.content.Context
 import android.util.Log
@@ -13,7 +13,7 @@ import java.util.concurrent.Executors
  * It holds whole conversations, so it stays in the app's private files, rotated to stay small, and is
  * switched off in Setup. Read it over adb:
  *
- *     adb shell run-as com.katsukasa.alice cat files/debug.log
+ *     adb shell run-as io.github.hiero.alice cat files/debug.log
  */
 object DebugLog {
     private const val TAG = "Alice"

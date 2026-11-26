@@ -1,4 +1,4 @@
-package com.katsukasa.alice
+package io.github.hiero.alice
 
 import android.content.Context
 import com.k2fsa.sherpa.onnx.OfflineTts

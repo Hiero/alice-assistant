@@ -1,4 +1,4 @@
-package com.katsukasa.alice
+package io.github.hiero.alice
 
 import java.time.DayOfWeek
 import java.time.LocalDate
