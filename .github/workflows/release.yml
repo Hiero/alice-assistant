@@ -23,7 +23,7 @@ jobs:
           KEYSTORE_BASE64: ${{ secrets.ALICE_KEYSTORE_BASE64 }}
         if: env.KEYSTORE_BASE64 != ''
         run: |
-          echo "$KEYSTORE_BASE64" | base64 -d > "$RUNNER_TEMP/alice.jks"
+          printf %s "$KEYSTORE_BASE64" | tr -d "[:space:]" | base64 -d > "$RUNNER_TEMP/alice.jks"
           echo "ALICE_KEYSTORE=$RUNNER_TEMP/alice.jks" >> "$GITHUB_ENV"
       - name: Phone app
         working-directory: android
