@@ -45,6 +45,13 @@ echo "==> Preparing the language model"
 ollama pull "$BASE_MODEL"
 ollama create alice -f "$ROOT/backend/Modelfile"
 
+# Her default pictures, unless pictures of your own are already in shell/assets. All or nothing, since the faces
+# must line up pixel for pixel.
+if [[ ! -e "$ROOT/shell/assets/alice-neutral.png" ]]; then
+    echo "==> Adding her default pictures"
+    cp -r "$ROOT/shell/default-art/." "$ROOT/shell/assets/"
+fi
+
 echo "==> Writing service files"
 for template in "$ROOT"/install/*.service.in; do
     sed -e "s|@ROOT@|$ROOT|g" -e "s|@UV@|$(command -v uv)|g" -e "s|@QS@|$(command -v qs)|g" \

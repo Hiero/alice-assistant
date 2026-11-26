@@ -14,7 +14,7 @@ JAVA_HOME=/path/to/jdk-21 ./gradlew assembleDebug
 adb install -r app/build/outputs/apk/debug/app-debug.apk
 ```
 
-Her faces and the launcher icon are copied from `shell/assets` at build time. Without them the app still builds, with a placeholder.
+Her faces and the launcher icon are copied in at build time: your own pictures from `shell/assets` and `android/icon` when they're there, or else her default ones from `shell/default-art` and `android/default-icon`.
 
 ## Reach the PC
 

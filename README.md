@@ -32,11 +32,11 @@ cd alice-assistant
 
 Then add the keybinds the installer prints to your niri config. `Mod+Shift+A` types to her and `Mod+Shift+S` talks. See [Installation](../../wiki/Installation) and [Usage](../../wiki/Usage) for the details.
 
-The repository includes only placeholder drawings of her; see [Artwork](../../wiki/Artwork) to add or paint your own.
+Her default pictures come with her, and the installer sets them up; see [Artwork](../../wiki/Artwork) to dress her in your own.
 
 ## Made with AI
 
-Alice was developed with the help of AI coding assistants. The code is reviewed and tested on a real desktop, but expect rough edges, and read what an action will do before you approve it.
+Alice was developed with the help of AI coding assistants. The code is reviewed and tested on a real desktop, but expect rough edges, and read what an action will do before you approve it. Her pictures were also made with AI: painted with a local image model (Illustrious XL), then finished with the tools in `tools/`.
 
 ## License
 

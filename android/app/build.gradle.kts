@@ -4,21 +4,22 @@ plugins {
     id("org.jetbrains.kotlin.plugin.compose")
 }
 
-// Her painted faces aren't in git (see the top-level .gitignore), so they're copied from the shell at build time.
-// Without them the app still works and shows a plain placeholder.
+// Her faces are copied from the shell at build time: your own painted art in shell/assets (not in git) when it's
+// there, or else her default art from shell/default-art. Never a mix, since the faces must line up pixel for pixel.
 val avatarDir = layout.buildDirectory.dir("generated/avatar")
 val copyAvatar by tasks.registering(Copy::class) {
-    from(rootProject.file("../shell/assets")) {
+    val painted = rootProject.file("../shell/assets")
+    from(if (painted.resolve("alice-neutral.png").exists()) painted else rootProject.file("../shell/default-art")) {
         include("alice-*.png", "party-hat.png", "outfits/*/alice-*.png")
     }
     into(avatarDir.map { it.dir("avatar") })
 }
 
-// Same for the launcher icon (tools/make_phone_icon.py), with a plain placeholder when it hasn't been made.
+// Same for the launcher icon (tools/make_phone_icon.py): your own in android/icon, or else the default one.
 val iconDir = layout.buildDirectory.dir("generated/icon")
 val copyIcon by tasks.registering(Sync::class) {
     val painted = rootProject.file("icon")
-    from(if (painted.isDirectory) painted else rootProject.file("placeholder-icon"))
+    from(if (painted.isDirectory) painted else rootProject.file("default-icon"))
     into(iconDir)
 }
 

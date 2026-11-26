@@ -1,4 +1,6 @@
-The repository only includes simple placeholder drawings, and her painted art is never committed (`shell/assets/*.png` and `art/` are ignored by git). Alice works with the placeholders; for a painted Alice, either draw your own or paint one with the tools below.
+Her default pictures are in `shell/default-art/`, and `install.sh` copies them into `shell/assets/` when that has no pictures yet. Pictures of your own go in `shell/assets/` instead; they stay on your computer (`shell/assets/*.png` and `art/` are ignored by git), and the shell and the phone app use them in place of the default ones. Draw your own, or paint them with the tools below. Without any pictures she shows simple placeholder drawings.
+
+The default pictures were painted with a local image model (Illustrious XL) and finished with these same tools.
 
 ## What the shell looks for
 

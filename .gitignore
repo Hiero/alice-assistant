@@ -1,4 +1,5 @@
-# Generated artwork stays local. The app falls back to shell/placeholder/.
+# Your own painted artwork stays local. install.sh fills shell/assets from shell/default-art when it's empty,
+# and the app falls back to shell/placeholder/ without either.
 /art/
 /shell/assets/*.png
 /shell/assets/outfits/

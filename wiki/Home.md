@@ -14,7 +14,7 @@ Alice is a local AI assistant that floats on the [niri](https://github.com/YaLTe
 
 ## Made with AI
 
-Alice was developed with the help of AI coding assistants. The code is reviewed and tested on a real desktop, but expect rough edges, and read what an action will do before you approve it.
+Alice was developed with the help of AI coding assistants. The code is reviewed and tested on a real desktop, but expect rough edges, and read what an action will do before you approve it. Her pictures were also made with AI: painted with a local image model (Illustrious XL), then finished with the tools in `tools/`.
 
 ## License
 
