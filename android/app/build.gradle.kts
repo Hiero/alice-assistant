@@ -40,8 +40,8 @@ android {
         applicationId = "io.github.hiero.alice"
         minSdk = 33
         targetSdk = 35
-        versionCode = 1
-        versionName = "0.1.0"
+        versionCode = 2
+        versionName = "0.1.1"
         ndk { abiFilters += "arm64-v8a" }  // The model runtime's native code, for phones only.
         // The PC's address the app tries before one is set in the app or over adb. Empty in public builds;
         // set aliceDefaultHost in ~/.gradle/gradle.properties to bake in your own.
