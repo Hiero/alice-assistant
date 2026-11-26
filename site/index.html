@@ -84,6 +84,12 @@
   .shot.empty img, .shot.empty video { display: none; }
   figure { margin: 0; }
   figcaption { font-size: .9rem; color: var(--ink-soft); margin-top: 10px; }
+  .shot img { cursor: zoom-in; }
+  /* A screenshot shown full size: click anywhere or press Esc to close. */
+  .viewer { border: 0; outline: none; padding: 0; background: transparent; max-width: 96vw; max-height: 92vh; overflow: visible; cursor: zoom-out; }
+  .viewer::backdrop { background: rgb(10 9 16 / 82%); }
+  .viewer img { display: block; max-width: 96vw; max-height: 86vh; width: auto; height: auto; border-radius: 12px; box-shadow: 0 20px 60px rgb(0 0 0 / 50%); }
+  .viewer p { margin: 10px 0 0; text-align: center; color: #ece6da; font-size: .95rem; }
 
   section { padding: 56px 0; }
   section.alt { background: var(--paper-2); border-block: 1px solid var(--line); }
@@ -106,8 +112,11 @@
 
   .split { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: start; }
   @media (max-width: 860px) { .split { grid-template-columns: 1fr; } }
+  .code { position: relative; margin: 0 0 16px; }
   pre { position: relative; margin: 0 0 16px; background: var(--code); color: var(--code-ink); border-radius: 12px; padding: 16px 18px; overflow-x: auto; font: 14px/1.6 var(--mono); }
-  pre .copy { position: absolute; top: 8px; right: 8px; font: 600 12px var(--sans); padding: 5px 10px; border-radius: 7px; border: 1px solid rgb(255 255 255 / 20%); background: rgb(255 255 255 / 8%); color: var(--code-ink); cursor: pointer; }
+  /* The copy button sits in its own strip above the commands, so it never covers them. */
+  .code pre { margin: 0; padding-top: 44px; }
+  .code .copy { position: absolute; top: 8px; right: 8px; font: 600 12px var(--sans); padding: 5px 10px; border-radius: 7px; border: 1px solid rgb(255 255 255 / 20%); background: rgb(255 255 255 / 8%); color: var(--code-ink); cursor: pointer; }
   .downloads { display: grid; gap: 12px; }
   .download { display: flex; gap: 14px; align-items: center; background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; text-decoration: none; color: var(--ink); }
   .download:hover { border-color: var(--blue); }
@@ -277,8 +286,12 @@ cd alice-assistant
     if (media.tagName === "VIDEO" && media.error) empty();
   }
 
-  // Copy buttons on code blocks.
+  // Copy buttons on code blocks, in a wrapper so they stay put when long commands scroll sideways.
   for (const pre of document.querySelectorAll("pre")) {
+    const box = document.createElement("div");
+    box.className = "code";
+    pre.replaceWith(box);
+    box.append(pre);
     const button = document.createElement("button");
     button.className = "copy"; button.type = "button"; button.textContent = "Copy";
     button.addEventListener("click", async () => {
@@ -286,7 +299,22 @@ cd alice-assistant
       catch { button.textContent = "Select and copy"; }
       setTimeout(() => (button.textContent = "Copy"), 1600);
     });
-    pre.append(button);
+    box.append(button);
+  }
+
+  // Clicking a screenshot shows it full size.
+  const viewer = document.createElement("dialog");
+  viewer.className = "viewer";
+  viewer.innerHTML = "<img alt=''><p></p>";
+  document.body.append(viewer);
+  viewer.addEventListener("click", () => viewer.close());
+  for (const img of document.querySelectorAll(".shot img")) {
+    img.addEventListener("click", () => {
+      viewer.querySelector("img").src = img.currentSrc || img.src;
+      viewer.querySelector("img").alt = img.alt;
+      viewer.querySelector("p").textContent = img.closest("figure")?.querySelector("figcaption")?.textContent ?? "";
+      viewer.showModal();
+    });
   }
 
   // Light or dark, remembered on this browser only.
