@@ -1,0 +1,32 @@
+# Copies wiki/ to the repository's GitHub wiki whenever it changes on main.
+# The wiki must exist first: create any page once in the Wiki tab.
+name: Wiki
+
+on:
+  push:
+    branches: [main]
+    paths: ["wiki/**"]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  wiki:
+    # The wiki and Pages need a public repository on a free GitHub plan, so this waits until it is public.
+    if: ${{ !github.event.repository.private }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Publish the pages
+        env:
+          TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git clone "https://x-access-token:${TOKEN}@github.com/${GITHUB_REPOSITORY}.wiki.git" wiki-repo
+          rsync -a --delete --exclude .git wiki/ wiki-repo/
+          cd wiki-repo
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git diff --cached --quiet || git commit -m "Update from ${GITHUB_SHA::7}"
+          git push

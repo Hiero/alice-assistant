@@ -1,0 +1,30 @@
+# Generated artwork stays local. The app falls back to shell/placeholder/.
+/art/
+/shell/assets/*.png
+/shell/assets/outfits/
+
+# Rendered per machine by install.sh from the .in templates.
+/install/*.service
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+.ruff_cache/
+.pytest_cache/
+
+# Editors and local tools
+.vscode/
+.idea/
+.claude/
+*.log
+.DS_Store
+
+# Android
+/android/local.properties
+/android/.gradle/
+/android/.kotlin/
+/android/build/
+/android/app/build/
+/android/icon/
+/android/app/libs/*.aar

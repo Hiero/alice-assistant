@@ -1,0 +1,28 @@
+Everything Alice can do. For the parts that need a key or a server, see [[Configuration]].
+
+- Chat by typing or by voice, in English, with Portuguese understood as input
+- Spoken replies through a local voice
+- Desktop tools: run commands, open apps, focus or close windows, notes and alarms
+- Allow/Deny confirmation for anything that changes your computer
+- Can look at your screen when you ask
+- Web search for quick facts like dates and prices, with the pages she read as clickable sources under her answer
+- Detailed weather and forecasts for any city from Open-Meteo (no key needed), with a week's forecast card in the bubble
+- A morning summary on the first open of the day: today's weather for your home city, plus Steam wishlist games that came out or went on sale
+- Computer status without approval cards: CPU, memory, GPU, temperatures, free disk space and the busiest programs
+- Reads the clipboard when you ask (to translate, summarize or save what you copied), and copies text for you
+- Currency conversion at the European Central Bank's daily rate
+- Finds files and folders in your home folder by name, as clickable links, and opens them
+- Finds recent news on any topic from Google News, with clickable headlines
+- Steam prices and sales, including which games on your public wishlist are on sale
+- Looks up any Steam game by name: whether it's out, its release date, price and rating, and what its most helpful reviews say
+- Films and TV series without spoilers: the premise, cast, age rating, IMDb, Rotten Tomatoes and Metacritic scores, what reviewers think, and which streaming services in your country have it (Brazil by default), with links. Needs free TMDB and OMDb keys (see [[Configuration]]).
+- Recommends the best reviewed Steam games of a genre, or the ones most like a game you name
+- Recommends new Steam releases from your most played games, read from Steam's files on this computer (no login or key)
+- Lists the games released on Steam on any day, with clickable store links. Each day is saved as a CSV in `~/.local/share/alice/steam`.
+- Plays music from your Jellyfin server, including playlists, favorites, a queue and mixes of similar songs, with volume control, and pauses it while she listens and talks
+- Long-term memory for preferences you ask her to remember
+- Greetings for Brazilian holidays, and birthday wishes with a party hat for birthdays you tell her
+- Holiday outfits on Halloween (with a witch hat), Christmas, New Year, Valentine's and Dia dos Namorados, and Easter, if their art is in `shell/assets/outfits/` (see [[Artwork]])
+- A wardrobe she changes into when you ask, or with a keybind: Queen Alice from *Through the Looking-Glass*, with a crown and the airs of a proud young noblewoman (an ojou-sama: "naturally", "my dear" and the odd "Ohohoho!"), and Evil Alice, with black hair, red eyes, a black and crimson dress and a sarcastic, acid tongue. Evil Alice still does everything you ask, and drops the sneer when you're truly upset. The outfit stays on across restarts, over any holiday outfit, until you ask for her usual dress.
+- On other days, a passage from Lewis Carroll's Alice books the first time you open her
+- Draggable, click-through floating avatar

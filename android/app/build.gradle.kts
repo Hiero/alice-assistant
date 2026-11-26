@@ -1,0 +1,95 @@
+plugins {
+    id("com.android.application")
+    id("org.jetbrains.kotlin.android")
+    id("org.jetbrains.kotlin.plugin.compose")
+}
+
+// Her painted faces aren't in git (see the top-level .gitignore), so they're copied from the shell at build time.
+// Without them the app still works and shows a plain placeholder.
+val avatarDir = layout.buildDirectory.dir("generated/avatar")
+val copyAvatar by tasks.registering(Copy::class) {
+    from(rootProject.file("../shell/assets")) {
+        include("alice-*.png", "party-hat.png", "outfits/*/alice-*.png")
+    }
+    into(avatarDir.map { it.dir("avatar") })
+}
+
+// Same for the launcher icon (tools/make_phone_icon.py), with a plain placeholder when it hasn't been made.
+val iconDir = layout.buildDirectory.dir("generated/icon")
+val copyIcon by tasks.registering(Sync::class) {
+    val painted = rootProject.file("icon")
+    from(if (painted.isDirectory) painted else rootProject.file("placeholder-icon"))
+    into(iconDir)
+}
+
+val sherpaVersion = "2.0.1"
+val sherpaAar = file("libs/sherpa-onnx-static-link-onnxruntime-$sherpaVersion.aar")
+if (!sherpaAar.exists()) {
+    sherpaAar.parentFile.mkdirs()
+    uri("https://github.com/k2-fsa/sherpa-onnx/releases/download/v$sherpaVersion/${sherpaAar.name}").toURL().openStream().use { input ->
+        sherpaAar.outputStream().use { input.copyTo(it) }
+    }
+}
+
+android {
+    namespace = "com.katsukasa.alice"
+    compileSdk = 35
+
+    defaultConfig {
+        applicationId = "com.katsukasa.alice"
+        minSdk = 33
+        targetSdk = 35
+        versionCode = 1
+        versionName = "0.1.0"
+        ndk { abiFilters += "arm64-v8a" }  // The model runtime's native code, for phones only.
+        // The PC's address the app tries before one is set in the app or over adb. Empty in public builds;
+        // set aliceDefaultHost in ~/.gradle/gradle.properties to bake in your own.
+        val defaultHost = providers.gradleProperty("aliceDefaultHost").getOrElse("")
+        buildConfigField("String", "DEFAULT_HOST", "\"$defaultHost\"")
+    }
+    // Release builds are signed with the key in ALICE_KEYSTORE (a .jks file) and ALICE_KEYSTORE_PASSWORD, taken from
+    // the environment or ~/.gradle/gradle.properties. One key for every release lets a new APK install over the old one.
+    // Without it they fall back to this computer's debug key, which is fine for trying the app out.
+    val keystore = providers.environmentVariable("ALICE_KEYSTORE").orElse(providers.gradleProperty("ALICE_KEYSTORE")).orNull
+    val keystorePassword = providers.environmentVariable("ALICE_KEYSTORE_PASSWORD")
+        .orElse(providers.gradleProperty("ALICE_KEYSTORE_PASSWORD")).orNull
+    if (keystore != null && keystorePassword != null) {
+        signingConfigs.create("release") {
+            storeFile = file(keystore)
+            storePassword = keystorePassword
+            keyAlias = "alice"
+            keyPassword = keystorePassword
+        }
+    }
+    buildTypes {
+        release {
+            isMinifyEnabled = false
+            signingConfig = signingConfigs.findByName("release") ?: signingConfigs.getByName("debug")
+        }
+    }
+    sourceSets.getByName("main").assets.srcDir(avatarDir)
+    sourceSets.getByName("main").res.srcDir(iconDir)
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
+    }
+    buildFeatures { compose = true; buildConfig = true }
+}
+
+kotlin { compilerOptions { jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17) } }
+
+tasks.named("preBuild").configure { dependsOn(copyAvatar, copyIcon) }
+
+dependencies {
+    implementation(platform("androidx.compose:compose-bom:2024.12.01"))
+    implementation("androidx.compose.ui:ui")
+    implementation("androidx.compose.material3:material3")
+    implementation("androidx.activity:activity-compose:1.9.3")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.8.7")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.9.0")
+    implementation("com.google.ai.edge.litertlm:litertlm-android:0.18.0")
+    // Kokoro on the phone (sherpa-onnx, with ONNX Runtime built in). Not on Maven, so it's fetched once into
+    // app/libs, which git ignores: https://github.com/k2-fsa/sherpa-onnx/releases
+    implementation(files(sherpaAar))
+    testImplementation("junit:junit:4.13.2")
+}

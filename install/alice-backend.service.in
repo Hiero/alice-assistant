@@ -1,0 +1,14 @@
+[Unit]
+Description=Alice assistant backend
+PartOf=graphical-session.target
+After=graphical-session.target ollama.service
+
+[Service]
+EnvironmentFile=-%h/.config/alice/env
+WorkingDirectory=@ROOT@/backend
+ExecStart=@UV@ run alice-backend
+Restart=on-failure
+RestartSec=3
+
+[Install]
+WantedBy=graphical-session.target

@@ -1,0 +1,9 @@
+- Actions that change your computer need your approval on a card showing the real command. The backend enforces this, not the model.
+- Closing the book or waiting 2 minutes counts as Deny.
+- Read-only tools run without asking, including looking at your screen when she decides that's what you asked for.
+- Notes and memories are plain files on your disk.
+- Web search sends your query to online search engines, and then visits the top three result pages directly to read them, so those sites see a normal visit from your computer. A second search in the same reply asks for approval first, and raw web text is removed from her memory of the conversation once she has answered.
+- She reads the clipboard only when you ask about it, and its text is removed from her memory once she has answered. Copying to the clipboard asks first.
+- Film and series lookups send the title you asked about to TMDB and OMDb. Reviewers' text is removed from her memory once she has answered, and reviews that mention spoilers are left out.
+- File search and computer status stay on your computer. Opening a file asks first.
+- The Steam features read your playtime from Steam's files on disk and need no login. Only game ids, game names you mention, and your public wishlist's id go to Steam.

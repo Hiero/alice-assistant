@@ -1,0 +1,4 @@
+# Ollama's default context is too small for tool use.
+# Apply with: ollama create alice -f backend/Modelfile
+FROM gemma4:12b
+PARAMETER num_ctx 16384

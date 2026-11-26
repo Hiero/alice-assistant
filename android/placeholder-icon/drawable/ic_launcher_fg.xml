@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Used when the painted icon from tools/make_phone_icon.py isn't there. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp" android:height="108dp" android:viewportWidth="108" android:viewportHeight="108">
+    <path android:fillColor="#4A6FA5" android:pathData="M54,30 L72,78 L64,78 L60,67 L48,67 L44,78 L36,78 Z M50,61 L58,61 L54,49 Z" />
+</vector>
